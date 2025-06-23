@@ -128,7 +128,7 @@ def analyze_text(transcript_path, output_speaker_dir, result_path, task_cutoff):
         df_single = speaker_time_series_df[speaker_time_series_df['speaker'].isin([speaker, 'None'])]
 
         missing_rows = speaker_time_series_df[~speaker_time_series_df['window_start'].isin(
-            df_single['window_start'])].groupby(['window_start', 'window_end']).agg(
+            df_single['window_start'])].groupby(['window_start', 'window_end'], as_index=False).agg(
             {'speaker': (lambda x: "None"), **{col: (lambda x: 0) for col in speaker_time_series_df.columns if
              col not in ['window_start', 'window_end', 'speaker']}}
         )
